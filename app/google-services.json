@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "932617180181",
+    "firebase_url": "https://cloudsong-b0fbf.firebaseio.com",
+    "project_id": "cloudsong-b0fbf",
+    "storage_bucket": "cloudsong-b0fbf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932617180181:android:8349df0ddccdff1b",
+        "android_client_info": {
+          "package_name": "com.example.onlinemusic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "932617180181-bvemav6h85id8tgfmfai7clfdvqjnp0t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.onlinemusic",
+            "certificate_hash": "d0d5dc44f80b0b7f64e153ed687aad944077b8db"
+          }
+        },
+        {
+          "client_id": "932617180181-mo7rflbjqq5hbsm7jsb3pquliti1k27b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnqg-VC9ZJq1x4uTNy6CdwSzX0kPrpXY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "932617180181-mo7rflbjqq5hbsm7jsb3pquliti1k27b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
