@@ -2,6 +2,11 @@ package com.example.onlinemusic;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.onlinemusic.ui.main.SectionsPagerAdapter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -20,8 +26,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.firebase.auth.FirebaseAuth;
+//import com.google.android.gms.common.api.Status;
+//import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     Button logoutBtn;
@@ -32,22 +38,31 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_main2);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
 
-        logoutBtn = findViewById(R.id.logoutBtn);
-        userName = findViewById(R.id.name);
-        userEmail = findViewById(R.id.email);
-        userId = findViewById(R.id.userId);
-        profileImage = findViewById(R.id.profileImage);
-
-        Button button = (Button) findViewById(R.id.musicBtn);
-        button.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Log.d("I am here", "a");
-
-            }
-        });
+//        setContentView(R.layout.activity_profile);
+//
+//        logoutBtn = findViewById(R.id.logoutBtn);
+//        userName = findViewById(R.id.name);
+//        userEmail = findViewById(R.id.email);
+//        userId = findViewById(R.id.userId);
+//        profileImage = findViewById(R.id.profileImage);
+//
+//        Button button = (Button) findViewById(R.id.musicBtn);
+//        button.setOnClickListener(new View.OnClickListener() {
+//
+//            public void onClick(View v) {
+//                Log.d("I am here", "a");
+//
+//            }
+//        });
 
         gso =  new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -59,23 +74,23 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
                 .build();
 
 
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
-                        new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(Status status) {
-                                if (status.isSuccess()){
-                                    gotoMainActivity();
-                                }else{
-                                    Toast.makeText(getApplicationContext(),"Session not close",Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
-            }
-        });
+//        logoutBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FirebaseAuth.getInstance().signOut();
+//                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
+//                        new ResultCallback<Status>() {
+//                            @Override
+//                            public void onResult(Status status) {
+//                                if (status.isSuccess()){
+//                                    gotoMainActivity();
+//                                }else{
+//                                    Toast.makeText(getApplicationContext(),"Session not close",Toast.LENGTH_LONG).show();
+//                                }
+//                            }
+//                        });
+//            }
+//        });
     }
 
     @Override
@@ -84,7 +99,7 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
         OptionalPendingResult<GoogleSignInResult> opr= Auth.GoogleSignInApi.silentSignIn(googleApiClient);
         if(opr.isDone()){
             GoogleSignInResult result=opr.get();
-            handleSignInResult(result);
+//            handleSignInResult(result);
         }else{
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override

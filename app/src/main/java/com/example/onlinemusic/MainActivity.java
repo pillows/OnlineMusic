@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         If authenticated redirect to "main activity" page
          */
         GoogleSignInOptions gso =  new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         googleApiClient=new GoogleApiClient.Builder(this)
