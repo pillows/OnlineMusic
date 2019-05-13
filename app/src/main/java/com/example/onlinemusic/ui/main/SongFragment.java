@@ -1,8 +1,12 @@
 package com.example.onlinemusic.ui.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +25,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -28,37 +33,73 @@ public class SongFragment extends Fragment {
     private StorageReference mStorageRef;
     private static final int FILE_SELECT_CODE = 0;
 
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
 
         if(requestCode == 1){
 
-            if(resultCode == RESULT_OK){
+            if(resultCode == RESULT_OK) {
 
-                //the selected audio.
-                Uri uri = data.getData();
 
-                Log.d("test", uri.toString());
-                mStorageRef = FirebaseStorage.getInstance().getReference();
-                final StorageReference riversRef = mStorageRef.child("music/music.mp3");
 
-                riversRef.putFile(uri)
-                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                // Get a URL to the uploaded content
-//                                Uri downloadUrl = taskSnapshot.getDownloadUri();
-                                Log.d("asda", riversRef.getDownloadUrl().toString());
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                // Handle unsuccessful uploads
-                                // ...
-                            }
-                        });
+
+
+
+
+                ArrayList<Uri> files = new ArrayList<Uri>();
+                ArrayList<String> names = new ArrayList<String>();
+                for(int i = 0; i < data.getClipData().getItemCount(); i++){
+
+                    Uri uri = data.getClipData().getItemAt(i).getUri();
+
+                    files.add(i, uri);
+//                    Log.d("URI ", data.getClipData().getItemAt(i).getUri().toString());
+                    Log.d("URI ", getFileName(uri));
+                }
+
+//                mStorageRef = FirebaseStorage.getInstance().getReference();
+//                final StorageReference riversRef = mStorageRef.child("music/music.mp3");
+//
+//                riversRef.putFile(uri)
+//                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                            @Override
+//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                // Get a URL to the uploaded content
+////                                Uri downloadUrl = taskSnapshot.getDownloadUri();
+//                                Log.d("asda", riversRef.getDownloadUrl().toString());
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception exception) {
+//                                // Handle unsuccessful uploads
+//                                // ...
+//                            }
+//                        });
             }
+//            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -76,28 +117,18 @@ public class SongFragment extends Fragment {
 
                 Intent intent_upload = new Intent();
                 intent_upload.setType("audio/*");
-                intent_upload.setAction(Intent.ACTION_GET_CONTENT);
+                intent_upload.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent_upload.setAction(Intent.ACTION_OPEN_DOCUMENT);
+//                intent_upload.setAction(Intent.ACTION_GET_CONTENT);
+
+
+
                 startActivityForResult(intent_upload,1);
 
 
 
-                Log.d("asdsa", " asdasd");
 
 
-//                Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
-//
-//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//                intent.setType("*/*");
-//                intent.addCategory(Intent.CATEGORY_OPENABLE);
-//
-//                try {
-//                    startActivityForResult(
-//                            Intent.createChooser(intent, "Select a File to Upload"),
-//                            FILE_SELECT_CODE);
-//                } catch (android.content.ActivityNotFoundException ex) {
-//                    // Potentially direct the user to the Market with a Dialog
-////                    Toast.makeText(this, "Please install a File Manager.", Toast.LENGTH_SHORT).show();
-//                }
 
             }
         });
