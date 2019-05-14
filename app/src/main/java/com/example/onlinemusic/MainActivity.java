@@ -70,10 +70,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         End google auth check
          */
 
-        String android_id = Secure.getString(this.getContentResolver(),
-                Secure.ANDROID_ID);
-
-        Log.d(android_id, "android id");
         Firebase.setAndroidContext(this);
         Firebase ref = new Firebase("https://cloudsong-b0fbf.firebaseio.com");
 
@@ -104,8 +100,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-                startActivityForResult(intent,RC_SIGN_IN);
+                try{
+                    Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                    startActivityForResult(intent,RC_SIGN_IN);
+                }
+                catch(Exception ex){
+                    Log.d(TAG, ex.getMessage());
+                }
+
             }
         });
     }
@@ -142,25 +144,25 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private void firebaseAuthWithGoogle(AuthCredential credential){
 
         firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
-                        if(task.isSuccessful()){
+            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+                    if(task.isSuccessful()){
 
 
 
 
-                            gotoProfile();
-                        }else{
-                            Log.w(TAG, "signInWithCredential" + task.getException().getMessage());
-                            task.getException().printStackTrace();
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
+                        gotoProfile();
+                    }else{
+                        Log.w(TAG, "signInWithCredential" + task.getException().getMessage());
+                        task.getException().printStackTrace();
+                        Toast.makeText(MainActivity.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
                     }
-                });
+
+                }
+            });
     }
 
 
