@@ -55,6 +55,8 @@ public class SongFragment extends Fragment {
         return result;
     }
 
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
 
@@ -66,16 +68,18 @@ public class SongFragment extends Fragment {
 
 
 
-
+                Uri uri_test = data.getData();
+//                Log.d("URI ", getFileName(uri));
 
                 ArrayList<Uri> files = new ArrayList<Uri>();
                 ArrayList<String> names = new ArrayList<String>();
+
+                // Check to see if multiple files. If it's singular file then it will return null
+                // if(data.getClipData() == null)
                 for(int i = 0; i < data.getClipData().getItemCount(); i++){
 
                     Uri uri = data.getClipData().getItemAt(i).getUri();
-
                     files.add(i, uri);
-//                    Log.d("URI ", data.getClipData().getItemAt(i).getUri().toString());
                     Log.d("URI ", getFileName(uri));
                 }
 
