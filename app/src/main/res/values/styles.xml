@@ -33,6 +33,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="miniplayerTitleText">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="miniplayerDetailText" parent="miniplayerTitleText">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+    <color name="progress_empty">#08000000</color>
+    <color name="accent">#40C4FF</color>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

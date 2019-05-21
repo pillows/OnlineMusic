@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
 
-        signInButton = findViewById(R.id.sign_in_button);
+        signInButton = (SignInButton)findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

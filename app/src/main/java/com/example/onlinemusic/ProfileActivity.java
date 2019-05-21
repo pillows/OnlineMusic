@@ -42,9 +42,9 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        ViewPager viewPager = (ViewPager)findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
+        TabLayout tabs = (TabLayout)findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
 //        setContentView(R.layout.activity_profile);
@@ -112,14 +112,14 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
     private void handleSignInResult(GoogleSignInResult result){
         if(result.isSuccess()){
             GoogleSignInAccount account=result.getSignInAccount();
-            userName.setText(account.getDisplayName());
-            userEmail.setText(account.getEmail());
-            userId.setText(account.getId());
-            try{
-                Glide.with(this).load(account.getPhotoUrl()).into(profileImage);
-            }catch (NullPointerException e){
-                Toast.makeText(getApplicationContext(),"image not found",Toast.LENGTH_LONG).show();
-            }
+//            userName.setText(account.getDisplayName());
+//            userEmail.setText(account.getEmail());
+//            userId.setText(account.getId());
+//            try{
+//                Glide.with(this).load(account.getPhotoUrl()).into(profileImage);
+//            }catch (NullPointerException e){
+//                Toast.makeText(getApplicationContext(),"image not found",Toast.LENGTH_LONG).show();
+//            }
 
         }else{
             gotoMainActivity();

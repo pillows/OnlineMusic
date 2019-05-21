@@ -16,5 +16,7 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="tab_text_1">Songs</string>
     <string name="tab_text_2">Playlists</string>
+    <string name="nothing_playing">Nothing is playing</string>
+    <string name="no_artist">Unknown artist</string>
     <string name="title_activity_fragment_tab1">FragmentTab1</string>
 </resources>

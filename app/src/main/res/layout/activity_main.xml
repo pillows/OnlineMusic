@@ -13,7 +13,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textSize="20dp"
-        android:text="This is main activity, sign in to move next activity." />
+        android:text="Login to access your songs" />
 
     <com.google.android.gms.common.SignInButton
         android:layout_width="match_parent"
